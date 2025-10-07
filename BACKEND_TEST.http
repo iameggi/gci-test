@@ -1,0 +1,26 @@
+@baseurl = http://localhost:8000
+
+### Register USER
+
+POST {{baseurl}}/api/register
+Content-Type: application/json
+
+{
+    "name": "Eggy fachrurrozy",
+    "email": "eggy@mahasiswa.com",
+    "password": "masuk123",
+    "password_confirmation": "masuk123",
+    "role": "mahasiswa"
+}
+
+
+### Login
+
+POST {{baseurl}}/api/login
+Content-Type: application/json
+
+{
+    "email": "eggy@mahasiswa.com",
+    "password": "masuk123"
+}
+
