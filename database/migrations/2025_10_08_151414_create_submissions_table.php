@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('submissions', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        $table->id();
+        $table->foreignId('assignment_id')->constrained()->onDelete('cascade');
+        $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
+        $table->string('file_path');
+        $table->integer('score')->nullable();
+        $table->timestamps();
+        $table->softDeletes();
         });
     }
 

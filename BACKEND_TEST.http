@@ -1,5 +1,5 @@
 @baseurl = http://localhost:8000
-@token_backend = 16|BVRF2gRbOpZaV5ylWhVwXVvr4jiWOdEDZ5vvyYci9a83c835
+@token_backend = 21|0Tc1DaplODXUioH7xgG1nBJ5uhyzmHzVaJmeM1nlc4465359
 
 
 
@@ -12,7 +12,7 @@ POST {{baseurl}}/api/login
 Content-Type: application/json
 
 {
-    "email": "ayaka@dosen.com",
+    "email": "eggy@mahasiswa.com",
     "password": "masuk123"
 }
 
@@ -101,8 +101,11 @@ Authorization: Bearer {{token_backend}}
 ############### Material  #######################
 
 
-### Upload Material leacture(Dosen)
+### Get material per course
 
+
+
+### Upload Material leacture(Dosen)
 
 POST {{baseurl}}/api/materials
 Authorization: Bearer {{token_backend}}
@@ -120,7 +123,7 @@ Golang application REST API
 Content-Disposition: form-data; name="file"; filename="sample.pdf"
 Content-Type: application/pdf
 
-< ./MATERIAL/sample.pdf
+< ./FILEEXTERNAL/MATERIAL/sample.pdf
 --boundary--
 
 
@@ -139,4 +142,75 @@ Authorization: Bearer {{token_backend}}
 GET {{baseurl}}/api/materials/1/download
 Authorization: Bearer {{token_backend}}
 
+
+##################### Create Assegment =======================
+
+
+### GET ASSIGMENT CREATED BE ME! LEACTURE / DOSEN
+
+GET {{baseurl}}/api/assignments/my-assignments
+Authorization: Bearer {{token_backend}}
+
+
+### GET ASSIGMENT DETAIL! LEACTURE DOSEN
+GET {{baseurl}}/api/assignments/my-assignments/1
+Authorization: Bearer {{token_backend}}
+
+
+
+### Create assigment (leacture/dosen)
+POST {{baseurl}}/api/assignments
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+{
+    "course_id": 1,
+    "title": "Tugas 1 - Membuat REST API",
+    "description": "Buat REST API sederhana menggunakan Golang",
+    "deadline": "2025-10-10 23:59:59"
+}
+
+
+### Assigment grade (leacture /dosen)
+
+POST {{baseurl}}/api/submissions/1/grade
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+{
+    "score": 85
+}
+
+
+### Assigment get
+GET {{baseurl}}/api/assignments?course_id=1
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+
+
+
+
+
+
+### Upload Submission (Student/Mahasiswa)
+POST {{baseurl}}/api/submissions
+Authorization: Bearer {{token_backend}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="assignment_id"
+
+1
+--boundary
+Content-Disposition: form-data; name="file"; filename="sample.pdf"
+Content-Type: application/zip
+
+< ./FILEEXTERNAL/TUGAS/sample.pdf
+--boundary--
+
+
+### GET ASSIGMENT MAHASISWA / STUDENT
+GET {{baseurl}}/api/submissions/me
+Authorization: Bearer {{token_backend}}
 
