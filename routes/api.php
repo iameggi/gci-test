@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\AssignmentController;
 use App\Http\Controllers\Api\SubmissionController;
+use App\Http\Controllers\Api\DiscussionController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -48,6 +49,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/assignments', [AssignmentController::class, 'index']);
         Route::get('/assignments/{id}', [AssignmentController::class, 'show']);
         Route::get('/submissions', [SubmissionController::class, 'index']);
+
+        Route::get('/discussions', [DiscussionController::class, 'index']);
+        Route::get('/discussions/{id}', [DiscussionController::class, 'show']);
+        Route::post('/discussions', [DiscussionController::class, 'store']);
+        Route::put('/discussions/{id}', [DiscussionController::class, 'update']);
+        Route::delete('/discussions/{id}', [DiscussionController::class, 'delete']);
+        Route::post('/discussions/{id}/replies', [DiscussionController::class, 'reply']);
+        Route::put('/replies/{id}', [DiscussionController::class, 'updateReply']);
+        Route::delete('/replies/{id}', [DiscussionController::class, 'deleteReply']);
 
 
 });

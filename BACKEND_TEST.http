@@ -1,5 +1,5 @@
 @baseurl = http://localhost:8000
-@token_backend = 21|0Tc1DaplODXUioH7xgG1nBJ5uhyzmHzVaJmeM1nlc4465359
+@token_backend = 24|23E1n6n2cf4umYzfwGQWqbPdEfGP5gZGbBZUbANr64bfc3f2
 
 
 
@@ -12,7 +12,7 @@ POST {{baseurl}}/api/login
 Content-Type: application/json
 
 {
-    "email": "eggy@mahasiswa.com",
+    "email": "eggy2@mahasiswa.com",
     "password": "masuk123"
 }
 
@@ -24,11 +24,11 @@ POST {{baseurl}}/api/register
 Content-Type: application/json
 
 {
-    "name": "Goshiki",
-    "email": "goshi@dosen.com",
+    "name": "Udin penyok",
+    "email": "udin21@mahasiswa.com",
     "password": "masuk123",
     "password_confirmation": "masuk123",
-    "role": "dosen"
+    "role": "mahasiswa"
 }
 
 
@@ -89,7 +89,7 @@ Authorization: Bearer {{token_backend}}
 
 ### Student enroll 
 
-POST {{baseurl}}/api/courses/4/enroll
+POST {{baseurl}}/api/courses/1/enroll
 Authorization: Bearer {{token_backend}}
 
 
@@ -213,4 +213,70 @@ Content-Type: application/zip
 ### GET ASSIGMENT MAHASISWA / STUDENT
 GET {{baseurl}}/api/submissions/me
 Authorization: Bearer {{token_backend}}
+
+
+
+################################### DISCUSSION ##################################
+
+### Create
+
+POST {{baseurl}}/api/discussions
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+{
+"course_id": 1,
+"content": "Hallo semuanya bagaimana best pratice dalam menangani data sekala besar??"
+}
+
+### get disccussion per course
+
+GET {{baseurl}}/api/discussions?course_id=1
+Authorization: Bearer {{token_backend}}
+
+### Replies
+
+POST {{baseurl}}/api/discussions/1/replies
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+{
+"content": "mantap coba pakai concurency dan efesiensi data gan."
+}
+
+### Details discussion and all replies
+
+GET {{baseurl}}/api/discussions/1
+Authorization: Bearer {{token_backend}}
+
+### Edit disccusion (only woned)
+
+PUT {{baseurl}}/api/discussions/1
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+{
+"content": "test (UPDATED)"
+}
+
+### Delete disccuss only owned
+
+DELETE {{baseurl}}/api/discussions/1
+Authorization: Bearer {{token_backend}}
+
+### edit replies
+
+PUT {{baseurl}}/api/replies/1
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+{
+"content": "aku adalahe dit"
+}
+
+### Delete replies
+
+DELETE {{baseurl}}/api/replies/1
+Authorization: Bearer {{token_backend}}
+
 
