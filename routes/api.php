@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\AssignmentController;
 use App\Http\Controllers\Api\SubmissionController;
 use App\Http\Controllers\Api\DiscussionController;
+use App\Http\Controllers\Api\ReportController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -59,5 +60,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/replies/{id}', [DiscussionController::class, 'updateReply']);
         Route::delete('/replies/{id}', [DiscussionController::class, 'deleteReply']);
 
+        Route::prefix('reports')->group(function () {
+            Route::get('/courses', [ReportController::class, 'coursesReport']);
+            Route::get('/assignments', [ReportController::class, 'assignmentsReport']);
+            Route::get('/students/{id}', [ReportController::class, 'studentReport']);
+    });
 
 });
