@@ -1,5 +1,5 @@
 @baseurl = http://localhost:8000
-@token_backend = 24|23E1n6n2cf4umYzfwGQWqbPdEfGP5gZGbBZUbANr64bfc3f2
+@token_backend = 25|WArLL9GVC0xEH2YvTz7ou1j9PqjA0wvW00Kkgbvn1dd73458
 
 
 
@@ -12,7 +12,7 @@ POST {{baseurl}}/api/login
 Content-Type: application/json
 
 {
-    "email": "eggy2@mahasiswa.com",
+    "email": "ayaka@dosen.com",
     "password": "masuk123"
 }
 
@@ -146,7 +146,7 @@ Authorization: Bearer {{token_backend}}
 ##################### Create Assegment =======================
 
 
-### GET ASSIGMENT CREATED BE ME! LEACTURE / DOSEN
+### GET ASSIGMENT 
 
 GET {{baseurl}}/api/assignments/my-assignments
 Authorization: Bearer {{token_backend}}
@@ -165,8 +165,8 @@ Content-Type: application/json
 
 {
     "course_id": 1,
-    "title": "Tugas 1 - Membuat REST API",
-    "description": "Buat REST API sederhana menggunakan Golang",
+    "title": "Tugas 2 - Membuat REST API",
+    "description": "Buat REST API sederhana menggunakan java springboot",
     "deadline": "2025-10-10 23:59:59"
 }
 
@@ -279,4 +279,18 @@ Content-Type: application/json
 DELETE {{baseurl}}/api/replies/1
 Authorization: Bearer {{token_backend}}
 
+
+################################ COURSE REPORT! ##########################
+
+#### 1. Report Courses
+GET {{baseurl}}/api/reports/courses
+Authorization: Bearer {{token_backend}}
+
+#### 2. Report Assignments
+GET {{baseurl}}/api/reports/assignments
+Authorization: Bearer {{token_backend}}
+
+#### 3. Report Student selected by id
+GET {{baseurl}}/api/reports/students/1
+Authorization: Bearer {{token_backend}}
 

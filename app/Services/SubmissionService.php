@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Submission;
 use App\Models\Assignment;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Services\GradeMail;
 
 class SubmissionService
 {
@@ -60,6 +62,8 @@ class SubmissionService
 
         $submission->update(['score' => $score]);
 
+        $this->gradeNotification($submission);
+
         return $submission->load(['student:id,name,email', 'assignment:id,title']);
     }
 
@@ -85,5 +89,14 @@ class SubmissionService
         $fileName = preg_replace('/[^A-Za-z0-9_-]/', '_', $originalName);
         
         return time() . '_student' . $studentId . '_' . $fileName . '.' . $extension;
+    }
+
+    private function gradeNotification(Submission $submission)
+    {
+        try {
+            Mail::to($submission->student->email)->send(new GradeMail($submission));
+        } catch (\Exception $e) {
+            \Log::error('Gagal kirim email nilai ke ' . $submission->student->email . ': ' . $e->getMessage());
+        }
     }
 }

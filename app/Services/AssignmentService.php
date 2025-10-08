@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Assignment;
 use App\Models\Course;
+use Illuminate\Support\Facades\Mail;
+use App\Services\AssignmentMail;
 
 class AssignmentService
 {
@@ -30,7 +32,10 @@ class AssignmentService
             'description' => $data['description'],
             'deadline' => $data['deadline'],
         ]);
-
+        $assignment->load(['course.students', 'course.lecturer']);
+        
+        $this->assignmentNotification($assignment);
+        
         return $assignment->load('course:id,name');
     }
 
@@ -105,4 +110,20 @@ class AssignmentService
 
         return true;
     }
+
+    private function assignmentNotification(Assignment $assignment)
+    {
+        $students = $assignment->course->students;
+
+        foreach ($students as $student) {
+            try {
+                Mail::to($student->email)->send(new AssignmentMail($assignment, $student));
+            } catch (\Exception $e) {
+                \Log::error('Gagal kirim email ke ' . $student->email . ': ' . $e->getMessage());
+            }
+        }
+    }
+
+
+
 }
