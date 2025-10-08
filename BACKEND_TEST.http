@@ -1,17 +1,9 @@
 @baseurl = http://localhost:8000
+@token_backend = 16|BVRF2gRbOpZaV5ylWhVwXVvr4jiWOdEDZ5vvyYci9a83c835
 
-### Register USER
 
-POST {{baseurl}}/api/register
-Content-Type: application/json
 
-{
-    "name": "Eggy fachrurrozy",
-    "email": "eggy@mahasiswa.com",
-    "password": "masuk123",
-    "password_confirmation": "masuk123",
-    "role": "mahasiswa"
-}
+################################## AUTH ################################
 
 
 ### Login
@@ -20,7 +12,131 @@ POST {{baseurl}}/api/login
 Content-Type: application/json
 
 {
-    "email": "eggy@mahasiswa.com",
+    "email": "ayaka@dosen.com",
     "password": "masuk123"
 }
+
+
+
+### Register USER
+
+POST {{baseurl}}/api/register
+Content-Type: application/json
+
+{
+    "name": "Goshiki",
+    "email": "goshi@dosen.com",
+    "password": "masuk123",
+    "password_confirmation": "masuk123",
+    "role": "dosen"
+}
+
+
+### logout
+
+POST {{baseurl}}/api/logout
+Authorization: Bearer {{token_backend}}
+
+
+################################## Course ################################
+
+### Get all course
+
+GET {{baseurl}}/api/courses
+Authorization: Bearer {{token_backend}}
+
+
+### Create new course (dosen/leacture)
+
+POST {{baseurl}}/api/courses
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+{
+    "name": "Embed system",
+    "description": "Learn rust embed system"
+}
+
+
+### Read course leacture/ dosen 
+GET {{baseurl}}/api/courses/me
+Authorization: Bearer {{token_backend}}
+
+
+### Read course leacture by id
+GET {{baseurl}}/api/courses/me/3
+Authorization: Bearer {{token_backend}}
+
+
+### Update course leacture
+PUT {{baseurl}}/api/courses/2
+Authorization: Bearer {{token_backend}}
+Content-Type: application/json
+
+{
+    "name": "Rest api",
+    "description": "Belajar Laravel"
+}
+
+
+### Delete course lecture
+DELETE {{baseurl}}/api/courses/3
+Authorization: Bearer {{token_backend}}
+
+
+############ for student
+
+
+### Student enroll 
+
+POST {{baseurl}}/api/courses/4/enroll
+Authorization: Bearer {{token_backend}}
+
+
+### Student get enroled
+GET {{baseurl}}/api/courses/enrolled
+Authorization: Bearer {{token_backend}}
+
+
+############### Material  #######################
+
+
+### Upload Material leacture(Dosen)
+
+
+POST {{baseurl}}/api/materials
+Authorization: Bearer {{token_backend}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="course_id"
+
+1
+--boundary
+Content-Disposition: form-data; name="title"
+
+Golang application REST API
+--boundary
+Content-Disposition: form-data; name="file"; filename="sample.pdf"
+Content-Type: application/pdf
+
+< ./MATERIAL/sample.pdf
+--boundary--
+
+
+
+### Delete Material leacture (Dosen)
+DELETE {{baseurl}}/api/materials/1
+Authorization: Bearer {{token_backend}}
+
+
+### Get per Course student
+GET {{baseurl}}/api/materials?course_id=1
+Authorization: Bearer {{token_backend}}
+
+
+### Download Material student
+GET {{baseurl}}/api/materials/1/download
+Authorization: Bearer {{token_backend}}
+
 
