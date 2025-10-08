@@ -3,11 +3,11 @@
 
 
 
-################################## AUTH ################################
-
+##################################
+#          AUTH SECTION          #
+##################################
 
 ### Login
-
 POST {{baseurl}}/api/login
 Content-Type: application/json
 
@@ -16,10 +16,7 @@ Content-Type: application/json
     "password": "masuk123"
 }
 
-
-
-### Register USER
-
+### Register (User)
 POST {{baseurl}}/api/register
 Content-Type: application/json
 
@@ -31,23 +28,21 @@ Content-Type: application/json
     "role": "mahasiswa"
 }
 
-
-### logout
-
+### Logout
 POST {{baseurl}}/api/logout
 Authorization: Bearer {{token_backend}}
 
 
-################################## Course ################################
 
-### Get all course
+##################################
+#         COURSE SECTION          #
+##################################
 
+### Get all courses
 GET {{baseurl}}/api/courses
 Authorization: Bearer {{token_backend}}
 
-
-### Create new course (dosen/leacture)
-
+### Create new course (Dosen)
 POST {{baseurl}}/api/courses
 Authorization: Bearer {{token_backend}}
 Content-Type: application/json
@@ -57,56 +52,46 @@ Content-Type: application/json
     "description": "Learn rust embed system"
 }
 
-
-### Read course leacture/ dosen 
+### Get courses by lecturer (Dosen)
 GET {{baseurl}}/api/courses/me
 Authorization: Bearer {{token_backend}}
 
-
-### Read course leacture by id
+### Get single course by lecturer
 GET {{baseurl}}/api/courses/me/3
 Authorization: Bearer {{token_backend}}
 
-
-### Update course leacture
+### Update course (Dosen)
 PUT {{baseurl}}/api/courses/2
 Authorization: Bearer {{token_backend}}
 Content-Type: application/json
 
 {
-    "name": "Rest api",
+    "name": "Rest API",
     "description": "Belajar Laravel"
 }
 
-
-### Delete course lecture
+### Delete course (Dosen)
 DELETE {{baseurl}}/api/courses/3
 Authorization: Bearer {{token_backend}}
 
 
-############ for student
+####### Student Course Actions #######
 
-
-### Student enroll 
-
+### Enroll course
 POST {{baseurl}}/api/courses/1/enroll
 Authorization: Bearer {{token_backend}}
 
-
-### Student get enroled
+### Get enrolled courses
 GET {{baseurl}}/api/courses/enrolled
 Authorization: Bearer {{token_backend}}
 
 
-############### Material  #######################
 
+##################################
+#        MATERIAL SECTION         #
+##################################
 
-### Get material per course
-
-
-
-### Upload Material leacture(Dosen)
-
+### Upload material (Dosen)
 POST {{baseurl}}/api/materials
 Authorization: Bearer {{token_backend}}
 Content-Type: multipart/form-data; boundary=boundary
@@ -126,39 +111,33 @@ Content-Type: application/pdf
 < ./FILEEXTERNAL/MATERIAL/sample.pdf
 --boundary--
 
-
-
-### Delete Material leacture (Dosen)
+### Delete material (Dosen)
 DELETE {{baseurl}}/api/materials/1
 Authorization: Bearer {{token_backend}}
 
-
-### Get per Course student
+### Get materials per course (Mahasiswa)
 GET {{baseurl}}/api/materials?course_id=1
 Authorization: Bearer {{token_backend}}
 
-
-### Download Material student
+### Download material (Mahasiswa)
 GET {{baseurl}}/api/materials/1/download
 Authorization: Bearer {{token_backend}}
 
 
-##################### Create Assegment =======================
 
+##################################
+#        ASSIGNMENT SECTION       #
+##################################
 
-### GET ASSIGMENT 
-
+### Get my assignments (Dosen)
 GET {{baseurl}}/api/assignments/my-assignments
 Authorization: Bearer {{token_backend}}
 
-
-### GET ASSIGMENT DETAIL! LEACTURE DOSEN
+### Get specific assignment detail (Dosen)
 GET {{baseurl}}/api/assignments/my-assignments/1
 Authorization: Bearer {{token_backend}}
 
-
-
-### Create assigment (leacture/dosen)
+### Create new assignment (Dosen)
 POST {{baseurl}}/api/assignments
 Authorization: Bearer {{token_backend}}
 Content-Type: application/json
@@ -166,13 +145,11 @@ Content-Type: application/json
 {
     "course_id": 1,
     "title": "Tugas 2 - Membuat REST API",
-    "description": "Buat REST API sederhana menggunakan java springboot",
+    "description": "Buat REST API sederhana menggunakan Java Spring Boot",
     "deadline": "2025-10-10 23:59:59"
 }
 
-
-### Assigment grade (leacture /dosen)
-
+### Grade submission (Dosen)
 POST {{baseurl}}/api/submissions/1/grade
 Authorization: Bearer {{token_backend}}
 Content-Type: application/json
@@ -181,19 +158,15 @@ Content-Type: application/json
     "score": 85
 }
 
-
-### Assigment get
+### Get assignments by course (Dosen/Mahasiswa)
 GET {{baseurl}}/api/assignments?course_id=1
 Authorization: Bearer {{token_backend}}
-Content-Type: application/json
 
 
 
+####### Student Assignment Actions #######
 
-
-
-
-### Upload Submission (Student/Mahasiswa)
+### Upload submission (Mahasiswa)
 POST {{baseurl}}/api/submissions
 Authorization: Bearer {{token_backend}}
 Content-Type: multipart/form-data; boundary=boundary
@@ -203,94 +176,89 @@ Content-Disposition: form-data; name="assignment_id"
 
 1
 --boundary
-Content-Disposition: form-data; name="file"; filename="sample.pdf"
+Content-Disposition: form-data; name="file"; filename="sample.zip"
 Content-Type: application/zip
 
-< ./FILEEXTERNAL/TUGAS/sample.pdf
+< ./FILEEXTERNAL/TUGAS/sample.zip
 --boundary--
 
-
-### GET ASSIGMENT MAHASISWA / STUDENT
+### Get my submissions (Mahasiswa)
 GET {{baseurl}}/api/submissions/me
 Authorization: Bearer {{token_backend}}
 
 
 
-################################### DISCUSSION ##################################
+##################################
+#        DISCUSSION SECTION       #
+##################################
 
-### Create
-
+### Create discussion
 POST {{baseurl}}/api/discussions
 Authorization: Bearer {{token_backend}}
 Content-Type: application/json
 
 {
-"course_id": 1,
-"content": "Hallo semuanya bagaimana best pratice dalam menangani data sekala besar??"
+    "course_id": 1,
+    "content": "Hallo semuanya bagaimana best practice dalam menangani data skala besar??"
 }
 
-### get disccussion per course
-
+### Get discussions per course
 GET {{baseurl}}/api/discussions?course_id=1
 Authorization: Bearer {{token_backend}}
 
-### Replies
-
+### Reply to discussion
 POST {{baseurl}}/api/discussions/1/replies
 Authorization: Bearer {{token_backend}}
 Content-Type: application/json
 
 {
-"content": "mantap coba pakai concurency dan efesiensi data gan."
+    "content": "Mantap, coba pakai concurrency dan efisiensi data gan."
 }
 
-### Details discussion and all replies
-
+### Get discussion with replies
 GET {{baseurl}}/api/discussions/1
 Authorization: Bearer {{token_backend}}
 
-### Edit disccusion (only woned)
-
+### Edit discussion (Owner only)
 PUT {{baseurl}}/api/discussions/1
 Authorization: Bearer {{token_backend}}
 Content-Type: application/json
 
 {
-"content": "test (UPDATED)"
+    "content": "test (UPDATED)"
 }
 
-### Delete disccuss only owned
-
+### Delete discussion (Owner only)
 DELETE {{baseurl}}/api/discussions/1
 Authorization: Bearer {{token_backend}}
 
-### edit replies
-
+### Edit reply
 PUT {{baseurl}}/api/replies/1
 Authorization: Bearer {{token_backend}}
 Content-Type: application/json
 
 {
-"content": "aku adalahe dit"
+    "content": "aku adalahe dit"
 }
 
-### Delete replies
-
+### Delete reply
 DELETE {{baseurl}}/api/replies/1
 Authorization: Bearer {{token_backend}}
 
 
-################################ COURSE REPORT! ##########################
 
-#### 1. Report Courses
+##################################
+#        REPORT SECTION           #
+##################################
+
+### Report: Courses
 GET {{baseurl}}/api/reports/courses
 Authorization: Bearer {{token_backend}}
 
-#### 2. Report Assignments
+### Report: Assignments
 GET {{baseurl}}/api/reports/assignments
 Authorization: Bearer {{token_backend}}
 
-#### 3. Report Student selected by id
+### Report: Student by ID
 GET {{baseurl}}/api/reports/students/1
 Authorization: Bearer {{token_backend}}
-
